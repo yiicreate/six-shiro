@@ -1,6 +1,7 @@
 package com.example.sixshiro.vo;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 
 @Getter
+@Setter
 public class Page<T> implements Serializable {
 
     private int page = 1;
@@ -24,5 +26,8 @@ public class Page<T> implements Serializable {
 
     private String orderBy = "";
 
-
+    public Page(Integer page,Integer pageSize){
+        this.page = page;
+        this.pageSize = pageSize;
+    }
 }

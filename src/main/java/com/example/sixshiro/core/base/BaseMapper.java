@@ -1,4 +1,4 @@
-package com.example.sixshiro.mapper;
+package com.example.sixshiro.core.base;
 
 import org.apache.ibatis.annotations.*;
 
@@ -7,10 +7,22 @@ import java.util.Map;
 
 /**
  * @author: lh
- * @date: 2021/3/30
+ * @date: 2021/3/31
  */
 
-public interface BaseMapper {
+
+public interface BaseMapper<T> {
+
+    public List<T> findAll();
+
+    public T get(String id);
+
+    public void del(String id);
+
+    public T update(T entity);
+
+    public T save(T entity);
+
     @Select("${sql}")
     public List<Map<String, Object>> execSelectSql(@Param(value="sql")String sql);
 

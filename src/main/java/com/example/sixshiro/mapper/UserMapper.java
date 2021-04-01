@@ -1,10 +1,9 @@
 package com.example.sixshiro.mapper;
 
+import com.example.sixshiro.core.base.BaseMapper;
 import com.example.sixshiro.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author: lh
@@ -13,6 +12,5 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface UserMapper extends BaseMapper {
-    List<User> findAll();
+public interface UserMapper extends BaseMapper<User> {
 }

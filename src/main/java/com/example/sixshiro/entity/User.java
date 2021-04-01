@@ -1,18 +1,19 @@
 package com.example.sixshiro.entity;
 
+import com.example.sixshiro.core.DataEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author: lh
  * @date: 2021/3/29
  */
 
-@Data
-public class User implements Serializable {
-
-    private int id;
+@Setter
+@Getter
+public class User extends DataEntity<User> {
 
     private String  userName;
 

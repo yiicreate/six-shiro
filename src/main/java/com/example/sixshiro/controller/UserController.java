@@ -1,5 +1,6 @@
 package com.example.sixshiro.controller;
 
+import com.example.sixshiro.core.base.BaseController;
 import com.example.sixshiro.entity.User;
 import com.example.sixshiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 
 @RestController
-public class UserController {
+public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 

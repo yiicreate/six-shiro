@@ -1,11 +1,10 @@
 package com.example.sixshiro.service;
 
+import com.example.sixshiro.core.CrudService;
 import com.example.sixshiro.entity.User;
 import com.example.sixshiro.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.Action;
 import java.util.List;
 
 /**
@@ -14,10 +13,7 @@ import java.util.List;
  */
 
 @Service
-public class UserService {
-    @Autowired
-    private UserMapper mapper;
-
+public class UserService extends CrudService<User,UserMapper> {
     public List<User> findAll(){
         return mapper.findAll();
     }
