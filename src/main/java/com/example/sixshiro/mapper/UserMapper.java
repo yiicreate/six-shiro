@@ -13,4 +13,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UserMapper extends BaseMapper<User> {
+   public User getByName(String userName);
+
+   public User getByToken(String token);
+
+   public int updateTokenById(String token,String id);
+
+   public int updatePasswordById(String password,String id);
 }

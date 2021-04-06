@@ -10,3 +10,4 @@ mybatis:
   config-location: classpath:/mybatis/mybatis-config.xml
   mapper-locations: classpath:com/example/sixshiro/**/*Mapper.xml
   type-aliases-package: com.example.sixshiro
+jwt.token.expireTime: 86400000 # 24小时，单位毫秒

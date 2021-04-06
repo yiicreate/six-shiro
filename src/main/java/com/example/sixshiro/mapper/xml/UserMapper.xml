@@ -4,4 +4,30 @@
     <select id="findAll" resultType="User">
         SELECT * FROM user
     </select>
+
+    <select id="getByName" resultType="User">
+        SELECT * FROM user WHERE  user_name = #{userName}
+    </select>
+
+    <select id="getByToken" resultType="User">
+        SELECT * FROM user WHERE  token = #{token}
+    </select>
+
+    <insert id="save">
+        SELECT * FROM user WHERE  user_name = #{userName}
+    </insert>
+
+    <!-- 更新用户密码 -->
+    <update id="updatePasswordById">
+		UPDATE sys_user SET
+			password = #{password}
+		WHERE id = #{id}
+	</update>
+
+    <!-- 更新用户token -->
+    <update id="updateTokenById">
+		UPDATE user SET
+			token = #{token}
+		WHERE id = #{id}
+	</update>
 </mapper>
