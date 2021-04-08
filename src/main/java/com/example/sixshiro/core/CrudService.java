@@ -31,6 +31,10 @@ public abstract class CrudService<T extends DataEntity<T>,M extends BaseMapper<T
         return mapper.findAll();
     }
 
+    public List<T> findList(T entity){
+        return mapper.findList(entity);
+    }
+
     public T update(T t){
         return mapper.update(t);
     };

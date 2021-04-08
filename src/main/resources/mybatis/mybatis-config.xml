@@ -42,16 +42,16 @@
 	</settings>
 	
 	<!-- 类型别名 -->
-<!--	<typeAliases>-->
-<!--		<typeAlias alias="Page" type="com.jeeplus.core.persistence.Page" />&lt;!&ndash;分页  &ndash;&gt;-->
-<!--	</typeAliases>-->
+	<typeAliases>
+		<typeAlias alias="Page" type="com.example.sixshiro.vo.Page" /><!--分页  -->
+	</typeAliases>
 
 <!--	<typeHandlers>-->
 <!--	    <typeHandler handler="com.jeeplus.core.mapper.ConvertBlobTypeHandler"-->
 <!--	        javaType="java.lang.String" jdbcType="BLOB"/>-->
 <!--	</typeHandlers>-->
 <!--	&lt;!&ndash; 插件配置 &ndash;&gt;-->
-<!--	<plugins>-->
-<!--		<plugin interceptor="com.jeeplus.core.persistence.interceptor.PaginationInterceptor" />-->
-<!--    </plugins>-->
+	<plugins>
+		<plugin interceptor="com.example.sixshiro.interceptor.SqlInterceptor" />
+    </plugins>
 </configuration>

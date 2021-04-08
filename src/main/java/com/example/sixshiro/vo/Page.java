@@ -26,6 +26,8 @@ public class Page<T> implements Serializable {
 
     private String orderBy = "";
 
+    public Page(){}
+
     public Page(Integer page,Integer pageSize){
         this.page = page;
         this.pageSize = pageSize;

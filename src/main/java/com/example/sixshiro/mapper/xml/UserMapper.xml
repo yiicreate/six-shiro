@@ -5,6 +5,10 @@
         SELECT * FROM user
     </select>
 
+    <select id="findList" resultType="User">
+        SELECT * FROM user WHERE  id = #{id}
+    </select>
+
     <select id="getByName" resultType="User">
         SELECT * FROM user WHERE  user_name = #{userName}
     </select>

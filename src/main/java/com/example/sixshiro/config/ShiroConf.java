@@ -111,10 +111,6 @@ public class ShiroConf {
         factoryBean.setSecurityManager(securityManager);
         factoryBean.setUnauthorizedUrl("/401");
 //
-//        /*
-//         * 自定义url规则
-//         * http://shiro.apache.org/web.html#urls-
-//         */
         Map<String, String> filterRuleMap = new LinkedHashMap<>();
 //        // 访问401和404页面不通过我们的Filter anon 可匿名访问
         filterRuleMap.put("/401", "anon");

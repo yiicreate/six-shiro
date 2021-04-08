@@ -15,6 +15,8 @@ public interface BaseMapper<T> {
 
     public List<T> findAll();
 
+    public List<T> findList(T entity);
+
     public T get(String id);
 
     public void del(String id);

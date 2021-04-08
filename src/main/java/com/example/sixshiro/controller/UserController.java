@@ -3,6 +3,7 @@ package com.example.sixshiro.controller;
 import com.example.sixshiro.core.base.BaseController;
 import com.example.sixshiro.entity.User;
 import com.example.sixshiro.service.UserService;
+import com.example.sixshiro.vo.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,11 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @GetMapping("/test")
-    public List<User> test(){
-        return userService.findAll();
+    public Page test(User user){
+        Page<User> page = new Page<>();
+        user.setPage(page);
+        user.setId("2");
+        page.setList(userService.findList(user));
+        return page;
     }
 }

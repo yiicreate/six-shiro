@@ -73,8 +73,6 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AuthenticationException("用户名或者密码错误");
         }
 
-
-//		return new SimpleAuthenticationInfo(token, token, "my_realm");
         // 校验登录验证码
 //		if ( LoginController.isValidateCodeLogin(token.getLoginName(), false, false)){
 //			Session session = UserUtils.getSession();
