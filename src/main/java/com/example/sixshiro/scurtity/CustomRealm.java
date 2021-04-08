@@ -40,8 +40,16 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //1.先获取到用户名
         String userName = (String) principalCollection.getPrimaryPrincipal();
-
-        return null;
+        // 获取当前已登录的用户
+        User user = userService.getByName(userName);
+        if (user != null) {
+            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+            // 添加用户权限
+            info.addStringPermission("user");
+            return info;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -82,5 +90,10 @@ public class CustomRealm extends AuthorizingRealm {
 //        }
 //        byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
         return new SimpleAuthenticationInfo(token, token, getName());
+    }
+
+    @Override
+    public String getAuthorizationCacheName() {
+        return this.getClass().getSimpleName();
     }
 }

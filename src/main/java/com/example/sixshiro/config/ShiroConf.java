@@ -1,15 +1,18 @@
 package com.example.sixshiro.config;
 
+import com.example.sixshiro.cache.ehcache.EhCacheCacheManager;
 import com.example.sixshiro.scurtity.CustomRealm;
 import com.example.sixshiro.scurtity.JWTFilter;
 import com.example.sixshiro.scurtity.session.CacheSessionDAO;
 import com.example.sixshiro.scurtity.session.SessionManager;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -59,20 +62,31 @@ public class ShiroConf {
         return sessionManager;
     }
 
+    @ConditionalOnProperty(name = "spring.cache.type", havingValue = "ehcache")
+    @Bean
+    public CacheManager shiroCacheManager(org.springframework.cache.ehcache.EhCacheCacheManager ehCacheCacheManager){
+        EhCacheCacheManager shiroCacheManager = new EhCacheCacheManager();
+        shiroCacheManager.setCacheManager(ehCacheCacheManager);
+        return shiroCacheManager;
+    }
+
+//    @ConditionalOnProperty(name = "spring.cache.type", havingValue = "redis")
 //    @Bean
 //    public CacheManager shiroRedisCacheManager(){
-//
+//        RedisCacheManager redisCacheManager = new RedisCacheManager();
+//        return redisCacheManager;
 //    }
     //,
-//            CacheManager cacheManager
+//
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager defaultWebSecurityManager(
             CustomRealm customRealm,
+            CacheManager cacheManager,
             SessionManager sessionManager) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
 
         defaultWebSecurityManager.setSessionManager(sessionManager);
-//        defaultWebSecurityManager.setCacheManager(cacheManager);
+        defaultWebSecurityManager.setCacheManager(cacheManager);
 //        defaultWebSecurityManager.setRealm(systemAuthorizingRealm);
         Collection<Realm> typeRealms = new ArrayList<>();
         typeRealms.add(customRealm);

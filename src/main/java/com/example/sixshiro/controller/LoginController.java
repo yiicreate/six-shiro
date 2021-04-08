@@ -3,8 +3,12 @@ package com.example.sixshiro.controller;
 import com.example.sixshiro.core.base.BaseController;
 import com.example.sixshiro.entity.User;
 import com.example.sixshiro.service.UserService;
+import com.example.sixshiro.utils.CacheUtil;
 import com.example.sixshiro.utils.JwtUtil;
+import com.example.sixshiro.utils.UserUtil;
 import com.example.sixshiro.vo.Result;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +44,12 @@ public class LoginController extends BaseController {
 
     @GetMapping("/test1")
     public Result test(){
-        return Result.success();
+        User u = (User) CacheUtil.get("user");
+        if(u==null){
+            u = UserUtil.getCurrentUser();
+            CacheUtil.put("user",u);
+            System.out.println("有缓存了么");
+        }
+        return Result.success().put("user",u);
     }
 }

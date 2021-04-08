@@ -6,6 +6,10 @@ spring:
     username: sckr
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cache:
+    type: ehcache
+  ehcache:
+    config: classpath:ehcache.xml
 mybatis:
   config-location: classpath:/mybatis/mybatis-config.xml
   mapper-locations: classpath:com/example/sixshiro/**/*Mapper.xml

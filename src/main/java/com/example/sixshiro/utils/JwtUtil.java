@@ -42,7 +42,6 @@ public class JwtUtil {
         }catch (TokenExpiredException e){
             return 1;
         }catch (Exception e){
-            System.out.println(e.getMessage());
             return 2;
         }
     }
