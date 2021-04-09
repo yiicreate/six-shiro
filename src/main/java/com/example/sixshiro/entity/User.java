@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 /**
  * @author: lh
  * @date: 2021/3/29
@@ -19,6 +21,7 @@ public class User extends DataEntity<User> {
 
     private String password;
 
+    @JsonIgnore
     private String token;
 
     private int sex;

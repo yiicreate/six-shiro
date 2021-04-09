@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.sixshiro.mapper.UserMapper">
+    <sql id="userColumns">
+		id AS "id",
+		user_name AS "userName",
+		sex AS "sex"
+	</sql>
+
     <select id="findAll" resultType="User">
-        SELECT * FROM user
+        SELECT
+        <include refid="userColumns"/>
+        FROM user
     </select>
 
     <select id="findList" resultType="User">
-        SELECT * FROM user WHERE  id = #{id}
+        SELECT
+        <include refid="userColumns"/>
+        FROM user WHERE  id = #{id}
     </select>
 
     <select id="getByName" resultType="User">
