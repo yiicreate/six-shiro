@@ -5,6 +5,7 @@ import com.example.sixshiro.entity.User;
 import com.example.sixshiro.service.UserService;
 import com.example.sixshiro.utils.CacheUtil;
 import com.example.sixshiro.utils.JwtUtil;
+import com.example.sixshiro.utils.KaptchaUtil;
 import com.example.sixshiro.utils.UserUtil;
 import com.example.sixshiro.vo.Result;
 import org.apache.shiro.SecurityUtils;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author: lh
@@ -52,4 +56,15 @@ public class LoginController extends BaseController {
         }
         return Result.success().put("user",u);
     }
+
+    @GetMapping("/image")
+    public void image(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        KaptchaUtil.validateCode(request,response);
+    }
+
+    @GetMapping("/check")
+    public String check(HttpServletRequest request, @RequestParam("code") String code){
+        return KaptchaUtil.check(request,code)?"成功":"失败";
+    }
+
 }

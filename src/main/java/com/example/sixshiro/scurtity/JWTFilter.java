@@ -67,16 +67,12 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
                 System.out.println(e.getMessage());
                 GlobalController.error401(request, response);//登录超时，需要刷新token
             }catch (Exception e){
-                System.out.println("没有access token, 请登录");
                 GlobalController.error401(request, response);//没有登录，需要登录
             }
         }else {
-            System.out.println("没有access token, 请登录");
             GlobalController.error401(request, response);//没有登录，需要登录
         }
-
         return false;
-
     }
 
     /**

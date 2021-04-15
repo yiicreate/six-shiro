@@ -57,7 +57,7 @@ public class ShiroConf {
         sessionManager.setGlobalSessionTimeout(86400000);
         sessionManager.setSessionValidationInterval(1800000);
         sessionManager.setSessionValidationSchedulerEnabled(true);
-        sessionManager.setSessionIdCookie(new SimpleCookie("wolfking.jeeplus.session.id"));
+        sessionManager.setSessionIdCookie(new SimpleCookie("shiro.session.id"));
         sessionManager.setSessionIdCookieEnabled(true);
         return sessionManager;
     }
@@ -115,6 +115,8 @@ public class ShiroConf {
 //        // 访问401和404页面不通过我们的Filter anon 可匿名访问
         filterRuleMap.put("/401", "anon");
         filterRuleMap.put("/login", "anon");
+        filterRuleMap.put("/image", "anon");
+        filterRuleMap.put("/check", "anon");
 //        // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
