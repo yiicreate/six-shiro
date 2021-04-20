@@ -1,6 +1,5 @@
 package com.example.sixshiro.core;
 
-import com.example.sixshiro.core.base.BaseEntity;
 import com.example.sixshiro.core.base.BaseMapper;
 import com.example.sixshiro.core.base.BaseService;
 import com.example.sixshiro.utils.RandUtil;
