@@ -28,7 +28,19 @@
     </select>
 
     <insert id="save">
-        SELECT * FROM user WHERE  user_name = #{userName}
+        INSERT INTO user(
+			id,
+			user_name,
+			password,
+			token,
+			sex
+		) VALUES (
+			#{id},
+			#{userName},
+			#{password},
+			#{token},
+			#{sex}
+		)
     </insert>
 
     <!-- 更新用户密码 -->

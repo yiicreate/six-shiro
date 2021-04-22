@@ -1,5 +1,6 @@
 package com.example.sixshiro.controller;
 
+import com.example.sixshiro.config.ParamConf;
 import com.example.sixshiro.core.base.BaseController;
 import com.example.sixshiro.entity.User;
 import com.example.sixshiro.service.UserService;
@@ -28,6 +29,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController extends BaseController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ParamConf paramConf;
     @PostMapping("/login")
     public Result login(@RequestParam("userName") String userName,
                         @RequestParam("passWord") String passWord){
@@ -48,6 +52,7 @@ public class LoginController extends BaseController {
 
     @GetMapping("/test1")
     public Result test(){
+        System.out.println(paramConf.getUrl());
         User u = (User) CacheUtil.get("user");
         if(u==null){
             u = UserUtil.getCurrentUser();

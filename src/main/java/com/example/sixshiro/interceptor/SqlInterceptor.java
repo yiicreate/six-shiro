@@ -32,6 +32,7 @@ import java.util.List;
 /**
  * @author: lh
  * @date: 2021/4/8
+ * 对查询的进行拦截，主要对分页数据进行处理
  */
 
 @Intercepts({@Signature(type = Executor.class, method = "query",

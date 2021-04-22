@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.sixshiro.mapper.ParamMapper">
+    <sql id="defaultColumns">
+        id AS "id",
+        code As "code",
+        value As "value"
+    </sql>
+    <sql id="leftJoin">
+    </sql>
+
+    <select id="get" resultType="Param">
+        SELECT
+        <include refid="defaultColumns"/>
+        FROM param a
+        WHERE a.code = #{code}
+    </select>
+
+    <select id="findAll" resultType="Param">
+        SELECT
+        <include refid="defaultColumns"/>
+        FROM param a
+    </select>
+
+    <select id="findList" resultType="Param">
+        SELECT
+        <include refid="defaultColumns"/>
+        FROM param a
+    </select>
+
+    <insert id="save">
+        INSERT INTO param(
+			id,
+			code,
+			value,
+			type,
+			sort,
+			is_use
+		) VALUES (
+			#{id},
+			#{code},
+			#{value},
+			#{type},
+			#{sort},
+			#{isUse},
+		)
+    </insert>
+
+    <update id="update">
+        UPDATE param SET
+			code = #{code},
+			value = #{value},
+			type = #{type},
+			sort = #{sort},
+			is_use = #{isUse}
+		WHERE id = #{id}
+    </update>
+
+    <!--物理删除-->
+    <update id="del">
+        DELETE FROM param
+		WHERE id = #{id}
+    </update>
+</mapper>
