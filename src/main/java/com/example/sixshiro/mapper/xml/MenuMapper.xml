@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="">
+    <sql id="defaultColumns">
+        id AS "id",
+        name AS "name",
+        url AS "url",
+        sort AS "sort",
+        icon AS "icon",
+        type AS "type",
+        is_use AS "is_use",
+        target AS "target",
+        pid AS "pid",
+        create_time AS "create_time",
+    </sql>
+    <sql id="leftJoin">
+    </sql>
+
+    <select id="get" resultType="table">
+        SELECT
+        <include refid="defaultColumns"/>
+        FROM menu
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultType="table">
+        SELECT
+        <include refid="defaultColumns"/>
+        FROM menu
+    </select>
+
+    <select id="findList" resultType="table">
+        SELECT
+        <include refid="defaultColumns"/>
+        FROM menu
+    </select>
+
+    <insert id="save">
+        INSERT INTO menu(
+			id,
+			name,
+			url,
+			sort,
+			icon,
+			type,
+			is_use,
+			target,
+			pid,
+			create_time
+		) VALUES (
+			#{id},
+			#{name},
+			#{url},
+			#{sort},
+			#{icon},
+			#{type},
+			#{isUse},
+			#{target},
+			#{pid},
+			#{createTime}
+		)
+    </insert>
+
+    <update id="update">
+        UPDATE menu SET
+			name = #{name},
+			url = #{url},
+			sort = #{sort},
+			icon = #{icon},
+			type = #{type},
+			is_use = #{isUse},
+			target = #{target},
+			pid = #{pid}
+		WHERE id = #{id}
+    </update>
+
+    <!--物理删除-->
+    <update id="del">
+        DELETE FROM menu
+		WHERE id = #{id}
+    </update>
+</mapper>
