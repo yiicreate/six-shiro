@@ -16,6 +16,7 @@ import java.io.IOException;
 /**
  * @author: lh
  * @date: 2021/4/1
+ * 用于公共的异常提醒等
  */
 
 @ControllerAdvice
