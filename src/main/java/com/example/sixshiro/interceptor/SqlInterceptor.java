@@ -5,10 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.ExecutorException;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.ParameterMode;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
@@ -66,9 +63,43 @@ public class SqlInterceptor implements Interceptor {
                 count = rs.getInt(1);
             }
             page.setTotal(count);
+            String pageSql = generatePageSql(boundSql.getSql(),page);
+
+            invocation.getArgs()[2] = new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
+            BoundSql newBoundSql = new BoundSql(mappedStatement.getConfiguration(), pageSql, boundSql.getParameterMappings(), boundSql.getParameterObject());
+//            //解决MyBatis 分页foreach 参数失效 start
+//            if (Reflections.getFieldValue(boundSql, "metaParameters") != null) {
+//                MetaObject mo = (MetaObject) Reflections.getFieldValue(boundSql, "metaParameters");
+//                Reflections.setFieldValue(newBoundSql, "metaParameters", mo);
+//            }
+//            //解决MyBatis 分页foreach 参数失效 end
+            MappedStatement newMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));
+
+            invocation.getArgs()[0] = newMs;
         }
         return invocation.proceed();
     }
+
+    /**
+     * 生成sql分页
+     * @param sql
+     * @param page
+     * @return
+     */
+    public static String generatePageSql(String sql, Page<Object> page) {
+        StringBuilder stringBuilder = new StringBuilder(sql);
+        stringBuilder.append(" limit ");
+        if(page.getPageNo()==1){
+            stringBuilder.append(page.getPageSize());
+        }else {
+            stringBuilder.append(page.getFirst()).append(",").append(page.getPageSize());
+        }
+        if(StringUtils.isNotBlank(page.getOrderBy())&&!stringBuilder.toString().toLowerCase().contains("order by")){
+            stringBuilder.append(" order by ").append(page.getOrderBy());
+        }
+        return stringBuilder.toString();
+    }
+
 
     private Object getFieldValueByName(String fieldName, Object o) {
         try {
@@ -80,6 +111,26 @@ public class SqlInterceptor implements Interceptor {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    private MappedStatement copyFromMappedStatement(MappedStatement ms,
+                                                    SqlSource newSqlSource) {
+        MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(),
+                ms.getId(), newSqlSource, ms.getSqlCommandType());
+        builder.resource(ms.getResource());
+        builder.fetchSize(ms.getFetchSize());
+        builder.statementType(ms.getStatementType());
+        builder.keyGenerator(ms.getKeyGenerator());
+        if (ms.getKeyProperties() != null) {
+            for (String keyProperty : ms.getKeyProperties()) {
+                builder.keyProperty(keyProperty);
+            }
+        }
+        builder.timeout(ms.getTimeout());
+        builder.parameterMap(ms.getParameterMap());
+        builder.resultMaps(ms.getResultMaps());
+        builder.cache(ms.getCache());
+        return builder.build();
     }
 
     public static void setParameters(PreparedStatement ps, MappedStatement mappedStatement, BoundSql boundSql, Object parameterObject) throws SQLException {
@@ -118,6 +169,18 @@ public class SqlInterceptor implements Interceptor {
                     typeHandler.setParameter(ps, i + 1, value, parameterMapping.getJdbcType());
                 }
             }
+        }
+    }
+
+    public static class BoundSqlSqlSource implements SqlSource {
+        BoundSql boundSql;
+
+        public BoundSqlSqlSource(BoundSql boundSql) {
+            this.boundSql = boundSql;
+        }
+
+        public BoundSql getBoundSql(Object parameterObject) {
+            return boundSql;
         }
     }
 }
